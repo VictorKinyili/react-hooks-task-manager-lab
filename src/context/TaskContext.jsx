@@ -1,19 +1,35 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const TaskContext = createContext();
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
-  // Fetch initial tasks from db.json on mount
   useEffect(() => {
     fetch("http://localhost:6001/tasks")
       .then((res) => res.json())
       .then((data) => setTasks(data));
   }, []);
 
+  function toggleComplete(id) {
+    const targetTask = tasks.find((task) => task.id === id);
+    if (!targetTask) return;
+
+    fetch(`http://localhost:6001/tasks/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: !targetTask.completed }),
+    })
+      .then((res) => res.json())
+      .then((updatedTask) => {
+        setTasks((prevTasks) =>
+          prevTasks.map((task) => (task.id === id ? updatedTask : task))
+        );
+      });
+  }
+
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
+    <TaskContext.Provider value={{ tasks, setTasks, toggleComplete }}>
       {children}
     </TaskContext.Provider>
   );
