@@ -1,135 +1,58 @@
-# Lab: Task Manager
+# Task Manager
 
-## Overview
-In this lab, we’ll build a Task Manager application that allows users to add, complete, and search tasks. Utilizing the hooks of `useRef` to persist values without re-rendering, `useId` to generate unique IDs for accessibility and controlled components, and `useContext` for global state management.
+A React application for organizing and tracking daily tasks. Users can add new tasks, mark existing tasks as completed, and search through their task list in real time using standard React hooks (`useContext`, `useId`, and `useRef`).
 
-## Task 1: Define the Problem
-The frontend is set up, but the application lacks interactivity and state management.
+## Screenshot
 
-As a user, I should be able to:
-- Add a new task using a form (`useId`)
-- Mark tasks as completed (`useContext`)
-- Search tasks dynamically (`useRef`)
+![Task Manager Application](./screenshot.png)
 
-## Task 2: Determine the Design
-Determine state and props needed for each component:
-- Global states (`useContext`)
-- Persistent Values (`useRef`)
-- Unique IDs (`useId`)
+## Features
 
-## Task 3: Develop the Code
-### Implement Global State with `useContext`
-- Create `TaskProvider` as global state within `TaskContext.jsx`
-- Replace tasks state in app with context
+- **Global State Management (`useContext`):** Uses `TaskContext` and `TaskProvider` to share tasks and state-updating functions across components without prop drilling.
+- **Add New Tasks (`useId` & `POST`):** Generates unique, accessible form IDs with `useId` and persists newly submitted tasks to the local JSON server.
+- **Toggle Task Completion (`PATCH`):** Allows users to mark tasks as complete or incomplete, updating both the UI and `db.json`.
+- **Dynamic Task Search (`useRef`):** Tracks search input values directly with `useRef` to filter displayed tasks dynamically.
 
-### Mark Task
-- Implement `toggleComplete` function within `TaskContext.jsx`
-- Call `toggleComplete` upon clicking task button
+## Technologies Used
 
-### Submit Tasks
-- Apply `useId` on form input
-- Implement `addTask` function within `TaskContext.jsx`
-- Call `addTask` within submit
+- React (`useContext`, `useId`, `useRef`, `useState`, `useEffect`)
+- Vite
+- JSON Server (REST API)
+- JavaScript (ES6+ Fetch API)
 
-### Implement Search Functionality
-- Implement `useRef` on search input
-- Implement filter on task context
+## Getting Started
 
-## Task 4: Test and Refine
-Debug and test during development using the provided test suite and React DevTools in Chrome.
+### Prerequisites
 
-## Task 5: Document and Maintain
-- Commit as you go, writing meaningful commit messages
-- Push commit history to GitHub periodically and when lab is complete
+- Node.js and npm installed on your machine.
 
-## Tools and Resources
-- GitHub Repo: 
-- `useRef`: [React useRef](https://react.dev/reference/react/useRef)
-- `useContext`: [React useContext](https://react.dev/reference/react/useContext)
-- `useId`: [React useId](https://react.dev/reference/react/useId)
+### Installation & Local Setup
 
-## Instructions
-### Set Up
-Before we begin coding, let's complete the initial setup for this lesson:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com<your-task-manager-repo-name>.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd <your-task-manager-repo-name>
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the JSON server backend:
+   ```bash
+   npm run server
+   ```
+5. In a separate terminal, start the React development server:
+   ```bash
+   npm run dev
+   ```
 
-#### Fork and Clone
-- Go to the provided GitHub repository link.
-- Fork the repository to your GitHub account.
-- Clone the forked repository to your local machine.
+### Running Tests
 
-#### Open and Run File
-- Open the project in VSCode.
-- Run `npm install` to install all necessary dependencies.
+To run the automated test suite:
 
-## Instructions
-### Task 1: Define the Problem
-The frontend is set up, but the application lacks interactivity and state management.
-
-As a user, I should be able to:
-- Add a new task using a form (`useId`)
-- Mark tasks as completed (`useContext`)
-- Search tasks dynamically (`useRef`)
-
-### Task 2: Determine the Design
-Determine state and props needed for each component.
-
-### Task 3: Develop, Test, and Refine the Code
-#### Open React application in browser
-```sh
-npm run dev
-```
-
-#### Run the included backend
-```sh
-npm run server
-```
-
-#### Run test suite
-```sh
+```bash
 npm run test
 ```
-
-### Create feature branch
-#### Implement Global State with `useContext`
-- Create `TaskProvider` as global state within `TaskContext.jsx`
-- Replace tasks state in app with context
-- Update `App` within `main.jsx` to be wrapped in `TaskProvider`
-
-#### Mark Task
-- Implement `toggleComplete` function within `TaskContext.jsx`
-- Ensure `toggleComplete` function edits both the `db.json` and page
-- Call `toggleComplete` upon clicking task button
-
-#### Submit Tasks
-- Apply `useId` on form input
-- Implement `addTask` function within `TaskContext.jsx`
-- Call `addTask` within submit
-
-#### Implement Search Functionality
-- Implement `useRef` on search input
-- Implement filter task context on `TaskList`
-
-### Push feature branch and open a PR on GitHub
-- Merge to main
-
-## Task 4: Document and Maintain
-### Best Practice documentation steps:
-- Add comments to code to explain purpose and logic
-- Clarify intent/functionality of code to other developers
-- Add screenshot of completed work included in Markdown in `README.md`
-- Update `README.md` text to reflect the functionality of the application following [Make a README](https://makeareadme.com)
-- Delete any stale branches on GitHub
-- Remove unnecessary/commented-out code
-- If needed, update `.gitignore` to remove sensitive data
-
-## Submission
-Once all tests are passing and working code is pushed to the GitHub main branch, submit your GitHub repo through Canvas using CodeGrade.
-
-## Grading Criteria
-The application passes all test suites.
-
-Ensure the application:
-- Loads tasks with context.
-- Submits new task with `useId`
-- Marks tasks as complete.
-- Filters tasks shown on the page by a search input.

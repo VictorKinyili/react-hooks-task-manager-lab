@@ -11,10 +11,6 @@ export function TaskProvider({ children }) {
       .then((data) => setTasks(data));
   }, []);
 
-  function toggleComplete(id) {
-    const targetTask = tasks.find((task) => task.id === id);
-    if (!targetTask) return;
-
   function addTask(title) {
     const newTask = { title, completed: false };
 
