@@ -15,6 +15,24 @@ export function TaskProvider({ children }) {
     const targetTask = tasks.find((task) => task.id === id);
     if (!targetTask) return;
 
+  function addTask(title) {
+    const newTask = { title, completed: false };
+
+    fetch("http://localhost:6001/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newTask),
+    })
+      .then((res) => res.json())
+      .then((createdTask) => {
+        setTasks((prevTasks) => [...prevTasks, createdTask]);
+      });
+  }
+
+  function toggleComplete(id) {
+    const targetTask = tasks.find((task) => task.id === id);
+    if (!targetTask) return;
+
     fetch(`http://localhost:6001/tasks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -29,7 +47,7 @@ export function TaskProvider({ children }) {
   }
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks, toggleComplete }}>
+    <TaskContext.Provider value={{ tasks, setTasks, toggleComplete, addTask }}>
       {children}
     </TaskContext.Provider>
   );
