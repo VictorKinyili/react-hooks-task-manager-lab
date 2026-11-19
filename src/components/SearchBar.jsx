@@ -1,24 +1,43 @@
-import React, { useRef, useState, useContext } from "react";
-import TaskList from "./TaskList";
+import { useRef, useState, useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 
 function SearchBar() {
+  const searchRef = useRef(null);
+  const { tasks, toggleComplete } = useContext(TaskContext);
   const [query, setQuery] = useState("");
 
-  function handleSearch(e) {
-    setQuery(e.target.value);
+  function handleSearch() {
+    setQuery(searchRef.current.value);
   }
 
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <div>
       <input
+        ref={searchRef}
         type="text"
         placeholder="Search tasks..."
-        value={query}
         onChange={handleSearch}
       />
-      <TaskList query={query}/>
+      <ul>
+        {filteredTasks.map((task) => (
+          <li key={task.id}>
+            <span
+              style={{
+                textDecoration: task.completed ? "line-through" : "none",
+              }}
+            >
+              {task.title}
+            </span>
+            <button onClick={() => toggleComplete(task.id)}>
+              {task.completed ? "Undo" : "Complete"}
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
